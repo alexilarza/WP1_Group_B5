@@ -29,7 +29,7 @@ class Aircraft:
 AIRCRAFT = {
     "B767": Aircraft(
         name='B767',
-        mlw=...,
+        mlw=
         ...
     ),
     # los otros cuatro
