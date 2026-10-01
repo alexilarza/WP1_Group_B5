@@ -1,16 +1,13 @@
 """
-atmosphere.py
--------------
-Modelo de la Atmosfera Estandar Internacional (ISA).
-Devuelve la densidad del aire a una altitud dada.
+Model of International Standard Atmosphere (ISA).
+Gives back air density at a given altitude.
 
-Valido entre 0 y 20 000 m. El simulador va de 1829 m (IAF, 6000 ft)
-a 12 192 m (FL400), asi que siempre estamos dentro de ese rango.
+Valid between 0 and 20000m. The rang of the project goes within it.
 
-Referencia: M. Cavcar, "The International Standard Atmosphere (ISA)",
-ecuaciones (1), (7), (8) y (9).
+Reference: M. Cavcar, "The International Standard Atmosphere (ISA)",
+equations (1), (7), (8) y (9).
 
-Unidades: altitud en m, temperatura en K, presion en Pa, densidad en kg/m^3.
+Units: altitude in m, temperature in K, pressure in Pa, density in kg/m^3.
 """
 
 import math
@@ -38,7 +35,7 @@ def isa(h):
     Devuelve la densidad del aire [kg/m^3] a la altitud h [m].
     """
 
-    # --- 1. Avisar si la altitud esta fuera del rango del modelo ---
+    # 1. Avisar si la altitud esta fuera del rango del modelo
     # El calculo sigue igualmente, pero el mensaje te indica que algo va mal
     # en el bucle (error de signo o altitud en pies en vez de metros).
     if h < H_MIN:
@@ -47,7 +44,7 @@ def isa(h):
     if h > H_MAX:
         print("AVISO: altitud por encima de 20000 m:", h, "m. Revisa las unidades.")
 
-    # --- 2. Temperatura y presion segun la capa ---
+    # 2. Temperatura y presion segun la capa
     if h <= H11:
         # Troposfera
         T = T0 - LAMBDA * h                               # Cavcar ec. (1)
@@ -58,7 +55,7 @@ def isa(h):
         T = T11
         p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)
 
-    # --- 3. Densidad con la ley de gases ideales ---
+    # 3. Densidad con la ley de gases ideales
     rho = p / (R * T)                                     # Cavcar ec. (9)
 
     return rho
