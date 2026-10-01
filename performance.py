@@ -13,8 +13,7 @@ def max_thrust(ac, h):
 
 def idle_thrust(ac, h):
     """BADA descent thrust [N], clean configuration (valid above 6000 ft)."""
-    hp = h / FT_TO_M                                   # h [m] -> hp [ft]
-    coef = ac.ct_desc_high if hp > ac.hp_desc else ac.ct_desc_low   # ft vs ft
+    coef = ac.ct_desc_high if h > ac.hp_desc else ac.ct_desc_low   # m vs m
     return coef * max_thrust(ac, h)
 
 
