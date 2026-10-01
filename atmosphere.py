@@ -29,30 +29,28 @@ H_MAX = 20000.0      # m         limite superior del modelo
 
 def isa(h):
     """
-    Devuelve la densidad del aire [kg/m^3] a la altitud h [m].
+    Returns air density [kg/m^3] at altitude h [m].
     """
 
-    # 1. Avisar si la altitud esta fuera del rango del modelo
-    # El calculo sigue igualmente, pero el mensaje te indica que algo va mal
-    # en el bucle (error de signo o altitud en pies en vez de metros).
+    # Tells if altitude is not in the range
     if h < H_MIN:
         print("AVISO: altitud negativa:", h, "m. Revisa el bucle.")
 
     if h > H_MAX:
         print("AVISO: altitud por encima de 20000 m:", h, "m. Revisa las unidades.")
 
-    # 2. Temperatura y presion segun la capa
+    # Temperature and pressure in troposphere and stratosphere
     if h <= H11:
-        # Troposfera
+        # Troposphere
         T = T0 - LAMBDA * h                               # Cavcar ec. (1)
         p = P0 * (1 - LAMBDA * h / T0) ** EXP_TROPO       # Cavcar ec. (7)
     else:
-        # Estratosfera: temperatura constante.
-        # La presion parte de la tropopausa (P11), no del nivel del mar.
+        # Stratosphere: temperature constant.
+
         T = T11
         p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)
 
-    # 3. Densidad con la ley de gases ideales
+    # Density con la ley de gases ideales
     rho = p / (R * T)                                     # Cavcar ec. (9)
 
     return rho
