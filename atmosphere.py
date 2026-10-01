@@ -12,9 +12,6 @@ Units: altitude in m, temperature in K, pressure in Pa, density in kg/m^3.
 
 import math
 
-# ---------------------------------------------------------------------------
-# Constantes (todas de Cavcar, en SI)
-# ---------------------------------------------------------------------------
 T0 = 288.15          # K         temperatura a nivel del mar
 P0 = 101325.0        # Pa        presion a nivel del mar
 LAMBDA = 0.0065      # K/m       gradiente termico en la troposfera
