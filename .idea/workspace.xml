@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="Start" />
+    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="Start">
+      <change beforePath="$PROJECT_DIR$/aircraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/aircraft.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,25 +22,84 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "alexilarza"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alexilarza&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/alexilarza/WP1_Group_B5.git",
-    "accountId": "59e82cf3-2835-42d9-95ba-334c1b126cca"
+    "accountId": "caad3485-f23d-4b23-a1cb-d82868d3ee28"
   }
 }]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0000846142991133" />
+      <entry key="MS500" value="1.2045908408801924" />
+      <entry key="S2" value="2.6425184416870398" />
+      <entry key="S5" value="3.791031556529274" />
+      <entry key="S10" value="4.491631304002793" />
+      <entry key="S30" value="6.006748785846251" />
+      <entry key="S60" value="8.102822949949845" />
+      <entry key="M2" value="11.14913723509399" />
+      <entry key="M5" value="14.895679189701124" />
+      <entry key="M10" value="16.735270401574596" />
+      <entry key="M15" value="17.43804440150351" />
+      <entry key="M30" value="18.191604015420346" />
+      <entry key="H1" value="18.588681419495312" />
+      <entry key="H2" value="18.792526129978516" />
+      <entry key="H4" value="18.895805040087126" />
+      <entry key="D1" value="18.982570183438998" />
+      <entry key="W1" value="18.997508454187052" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.619034463065022E-4" />
+      <entry key="MS500" value="0.3267617358958555" />
+      <entry key="S2" value="2.1348248897703344" />
+      <entry key="S5" value="3.519479139086438" />
+      <entry key="S10" value="4.3301400364383555" />
+      <entry key="S30" value="5.932695346153103" />
+      <entry key="S60" value="8.054913829627672" />
+      <entry key="M2" value="11.118167001784082" />
+      <entry key="M5" value="14.88002465035693" />
+      <entry key="M10" value="16.72665937829887" />
+      <entry key="M15" value="17.432105547677505" />
+      <entry key="M30" value="18.188528719054634" />
+      <entry key="H1" value="18.58711595040825" />
+      <entry key="H2" value="18.791736263480313" />
+      <entry key="H4" value="18.895408301269658" />
+      <entry key="D1" value="18.98250380758973" />
+      <entry key="W1" value="18.997498965708534" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="3JlOGwg2yTpYCBBtmjPwyemUzDH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,16 +111,24 @@
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "python.packages.toolwindow.project.migrated.to.right.top.v2": "true",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
+        <option value="bundled-python-sdk-73a66231627c-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.10968.92" />
       </set>
     </attachedChunks>
   </component>
@@ -70,6 +139,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1790232095314</updated>
+      <workItem from="1790835960883" duration="635000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -89,6 +159,9 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Start" />
