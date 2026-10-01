@@ -1,0 +1,91 @@
+Index: atmosphere.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\nModel of International Standard Atmosphere (ISA).\nGives back air density at a given altitude.\n\nValid between 0 and 20000m. The rang of the project goes within it.\n\nReference: M. Cavcar, \"The International Standard Atmosphere (ISA)\",\nequations (1), (7), (8) y (9).\n\nUnits: altitude in m, temperature in K, pressure in Pa, density in kg/m^3.\n\"\"\"\n\nimport math\n\nT0 = 288.15          # K         temperatura a nivel del mar\nP0 = 101325.0        # Pa        presion a nivel del mar\nLAMBDA = 0.0065      # K/m       gradiente termico en la troposfera\nR = 287.04           # J/(kg K)  constante del aire\nG = 9.80665          # m/s^2     gravedad estandar\nEXP_TROPO = 5.2561   # -         exponente de la ec. (7)\n\nH11 = 11000.0        # m         altitud de la tropopausa\nT11 = 216.65         # K         temperatura en la tropopausa\nP11 = 22632.0        # Pa        presion en la tropopausa (226.32 hPa)\n\nH_MIN = 0.0          # m         limite inferior del modelo\nH_MAX = 20000.0      # m         limite superior del modelo\n\n\ndef isa(h):\n    \"\"\"\n    Devuelve la densidad del aire [kg/m^3] a la altitud h [m].\n    \"\"\"\n\n    # 1. Avisar si la altitud esta fuera del rango del modelo\n    # El calculo sigue igualmente, pero el mensaje te indica que algo va mal\n    # en el bucle (error de signo o altitud en pies en vez de metros).\n    if h < H_MIN:\n        print(\"AVISO: altitud negativa:\", h, \"m. Revisa el bucle.\")\n\n    if h > H_MAX:\n        print(\"AVISO: altitud por encima de 20000 m:\", h, \"m. Revisa las unidades.\")\n\n    # 2. Temperatura y presion segun la capa\n    if h <= H11:\n        # Troposfera\n        T = T0 - LAMBDA * h                               # Cavcar ec. (1)\n        p = P0 * (1 - LAMBDA * h / T0) ** EXP_TROPO       # Cavcar ec. (7)\n    else:\n        # Estratosfera: temperatura constante.\n        # La presion parte de la tropopausa (P11), no del nivel del mar.\n        T = T11\n        p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)\n\n    # 3. Densidad con la ley de gases ideales\n    rho = p / (R * T)                                     # Cavcar ec. (9)\n\n    return rho\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/atmosphere.py b/atmosphere.py
+--- a/atmosphere.py	(revision 0650e10e1411462d6c7b355bceadf438e6a2a7bf)
++++ b/atmosphere.py	(date 1790838349822)
+@@ -29,30 +29,28 @@
+ 
+ def isa(h):
+     """
+-    Devuelve la densidad del aire [kg/m^3] a la altitud h [m].
++    Returns air density [kg/m^3] at altitude h [m].
+     """
+ 
+-    # 1. Avisar si la altitud esta fuera del rango del modelo
+-    # El calculo sigue igualmente, pero el mensaje te indica que algo va mal
+-    # en el bucle (error de signo o altitud en pies en vez de metros).
++    # Tells if altitude is not in the range
+     if h < H_MIN:
+         print("AVISO: altitud negativa:", h, "m. Revisa el bucle.")
+ 
+     if h > H_MAX:
+         print("AVISO: altitud por encima de 20000 m:", h, "m. Revisa las unidades.")
+ 
+-    # 2. Temperatura y presion segun la capa
++    # Temperature and pressure in troposphere and stratosphere
+     if h <= H11:
+-        # Troposfera
++        # Troposphere
+         T = T0 - LAMBDA * h                               # Cavcar ec. (1)
+         p = P0 * (1 - LAMBDA * h / T0) ** EXP_TROPO       # Cavcar ec. (7)
+     else:
+-        # Estratosfera: temperatura constante.
+-        # La presion parte de la tropopausa (P11), no del nivel del mar.
++        # Stratosphere: temperature constant.
++
+         T = T11
+         p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)
+ 
+-    # 3. Densidad con la ley de gases ideales
++    # Density con la ley de gases ideales
+     rho = p / (R * T)                                     # Cavcar ec. (9)
+ 
+     return rho
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"atmosphere\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/atmosphere.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/atmosphere.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;alexilarza&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;url&quot;: &quot;https://github.com/alexilarza/WP1_Group_B5.git&quot;,\n    &quot;accountId&quot;: &quot;59e82cf3-2835-42d9-95ba-334c1b126cca&quot;\n  }\n}</component>\n  <component name=\"McpProjectServerCommands\">\n    <commands />\n    <urls />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 6\n}</component>\n  <component name=\"ProjectId\" id=\"3JlOGwg2yTpYCBBtmjPwyemUzDH\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\n    \"Python.atmosphere.executor\": \"Run\",\n    \"RunOnceActivity.MCP Project settings loaded\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.git.unshallow\": \"true\",\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"junie.onboarding.icon.badge.shown\": \"true\",\n    \"to.speed.mode.migration.done\": \"true\"\n  }\n}]]></component>\n  <component name=\"RunManager\">\n    <configuration name=\"atmosphere\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"WP1_B5\" />\n      <option name=\"ENV_FILES\" value=\"\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"RUN_TOOL\" value=\"\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/atmosphere.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"\" />\n      <created>1790232095314</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1790232095314</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Start\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790236200521</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790236200521</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Start\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790236309660</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790236309660</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"atmosphere\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790837380652</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790837380652</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"4\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Start\" />\n    <MESSAGE value=\"atmosphere\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"atmosphere\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 0650e10e1411462d6c7b355bceadf438e6a2a7bf)
++++ b/.idea/workspace.xml	(date 1790838688481)
+@@ -125,7 +125,31 @@
+       <option name="project" value="LOCAL" />
+       <updated>1790837380652</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="atmosphere">
++      <option name="closed" value="true" />
++      <created>1790837716675</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1790837716675</updated>
++    </task>
++    <task id="LOCAL-00005" summary="atmosphere">
++      <option name="closed" value="true" />
++      <created>1790837869988</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1790837869988</updated>
++    </task>
++    <task id="LOCAL-00006" summary="atmosphere">
++      <option name="closed" value="true" />
++      <created>1790837974152</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1790837974152</updated>
++    </task>
++    <option name="localTasksCounter" value="7" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
