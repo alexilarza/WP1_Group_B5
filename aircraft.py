@@ -15,7 +15,7 @@ class Aircraft:
         self.cd2_clean = cd2_clean        # -
         self.cd0_app = cd0_app            # -   (no usado: IAF a 6000 ft)
         self.cd2_app = cd2_app            # -   (no usado)
-        self.hp_desc = hp_desc            # m   (convertido desde ft en la tabla)
+        self.hp_desc = hp_desc            # ft
         self.ct_desc_high = ct_desc_high  # -
         self.ct_desc_low = ct_desc_low    # -
         self.ct_desc_app = ct_desc_app    # -   (no usado)
