@@ -62,34 +62,3 @@ def isa(h):
     rho = p / (R * T)                                     # Cavcar ec. (9)
 
     return rho
-
-
-# ---------------------------------------------------------------------------
-# Validacion contra la Tabla 3 de Cavcar.
-# Solo se ejecuta si lanzas este archivo directamente: python atmosphere.py
-# Si otro archivo hace "from atmosphere import isa", esto NO se ejecuta.
-# ---------------------------------------------------------------------------
-if __name__ == "__main__":
-    FT_TO_M = 0.3048
-    RHO0 = 1.225   # densidad a nivel del mar, para pasar sigma a rho
-
-    print("Altitud            rho calculada    rho Cavcar")
-    print("-----------------------------------------------")
-
-    rho = isa(0.0)
-    print("0 ft               ", round(rho, 4), "          ", RHO0)
-
-    rho = isa(6000 * FT_TO_M)
-    print("6000 ft (IAF)      ", round(rho, 4), "          ", round(0.8359 * RHO0, 4))
-
-    rho = isa(30000 * FT_TO_M)
-    print("30000 ft           ", round(rho, 4), "          ", round(0.3741 * RHO0, 4))
-
-    rho = isa(40000 * FT_TO_M)
-    print("40000 ft (FL400)   ", round(rho, 4), "          ", round(0.2462 * RHO0, 4))
-
-    # Las dos capas deben dar casi lo mismo justo debajo y justo encima de 11 000 m
-    print()
-    print("Continuidad en la tropopausa:")
-    print("  10999 m:", round(isa(10999.0), 5))
-    print("  11001 m:", round(isa(11001.0), 5))
