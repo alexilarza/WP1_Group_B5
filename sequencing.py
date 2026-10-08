@@ -18,7 +18,7 @@ SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
 # from the ENAIRE STAR charts (AIP; the charts give NM, converted to km).
 # ---------------------------------------------------------------------------
 STARS = {
-    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 91.7},
+    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 129.08},
     "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_km": 94.5},
     "MARTA3Z": {"aircraft": "B777", "mlw": 100, "distance_km": 178.3},
     "MATEX3Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 190.0},
