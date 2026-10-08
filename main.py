@@ -15,7 +15,7 @@ from sequencing import STARS, scenario_1, scenario_2, arrival_order, print_scena
 
 MLW_PERCENTS = [80, 100]
 
-# One colour per aircraft (checked for colour-blind readers),
+# One colour per aircraft,
 # one line style per weight: solid = 100% MLW, dashed = 80% MLW.
 COLOURS = {
     "B767": "#2a78d6",   # blue

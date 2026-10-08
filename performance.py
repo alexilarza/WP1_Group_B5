@@ -150,6 +150,7 @@ def descent_state(h, m, aircraft):
     # If thrust >= drag the aircraft would not descend: something is wrong
     if rod <= 0:
         print("WARNING:", aircraft.name, "does not descend at h =", h, "m. Check thrust.")
+        return -1
 
     gamma = math.asin(rod / v)
 
