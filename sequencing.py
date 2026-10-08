@@ -36,6 +36,14 @@ def time_to_string(seconds):
     return str(hours).zfill(2) + ":" + str(minutes).zfill(2) + ":" + str(secs).zfill(2)
 
 
+def duration_to_string(seconds):
+    """Converts a duration in seconds to the text 'MM min SS s'."""
+    seconds = round(seconds)
+    minutes = seconds // 60
+    secs = seconds % 60
+    return str(minutes) + " min " + str(secs).zfill(2) + " s"
+
+
 def time_to_iaf(trajectory, distance):
     """
     Finds the point of the trajectory that is "distance" metres before the IAF.
@@ -155,7 +163,7 @@ def print_scenario(results, order, title):
     """Prints one row per aircraft, in order of arrival at the IAF."""
     print()
     print(title)
-    print("STAR      aircraft  MLW%  h_entry[m]  flight[min]  entry     IAF       gap[s]")
+    print("STAR      aircraft  MLW%  h_entry[m]  entry     STAR->IAF     IAF       gap[s]")
 
     for k in range(len(order)):
         star = order[k]
@@ -169,7 +177,7 @@ def print_scenario(results, order, title):
 
         print(star, "  ", STARS[star]["aircraft"], "    ", STARS[star]["mlw"],
               "   ", round(r["h_entry"]),
-              "       ", round(r["flight_time"] / 60, 1),
               "      ", time_to_string(r["entry_time"]),
+              "", duration_to_string(r["flight_time"]),
               "", time_to_string(r["iaf_time"]),
               "", gap)
