@@ -11,6 +11,7 @@ reused in later tasks (arrival sequencing, STAR altitude constraints).
 import matplotlib.pyplot as plt
 from aircraft import AIRCRAFT, FT_TO_M
 from simulator import getCDO, simulate_cdo
+from sequencing import STARS, scenario_1, scenario_2, arrival_order, print_scenario, time_to_string
 
 MLW_PERCENTS = [80, 100]
 
@@ -60,7 +61,30 @@ for name in AIRCRAFT:
 
 
 # ---------------------------------------------------------------------------
-# 3. Plot: altitude vs distance to the IAF
+# 3. Arrival sequencing at LEBL (SoW section 3)
+#    Needs the STAR distances in sequencing.py
+# ---------------------------------------------------------------------------
+results_1 = scenario_1(trajectories)
+order = arrival_order(results_1)
+
+# Only run the scenarios when all six STAR distances are filled in
+if len(order) == len(STARS):
+    print_scenario(results_1, order, "SCENARIO 1: all aircraft at the STAR entry point at 11:45:00")
+
+    results_2 = scenario_2(results_1, order)
+    print_scenario(results_2, order, "SCENARIO 2: 2 min separation at the IAF")
+
+    print()
+    print("Scenario 2: new STAR entry times")
+    for star in order:
+        print(star, "  ", time_to_string(results_2[star]["entry_time"]),
+              "  change:", round(results_2[star]["shift"]), "s")
+else:
+    print("Fill in all the STAR distances in sequencing.py to run the scenarios.")
+
+
+# ---------------------------------------------------------------------------
+# 4. Plot: altitude vs distance to the IAF
 # ---------------------------------------------------------------------------
 fig, ax = plt.subplots(figsize=(10, 6))
 
