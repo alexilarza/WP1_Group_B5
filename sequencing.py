@@ -9,8 +9,6 @@ The trajectories come from main.py (dictionary "trajectories").
 Times of day are stored in seconds since midnight. Units: SI.
 """
 
-from aircraft import FT_TO_M
-
 NM_TO_M = 1852.0                     # m per nautical mile
 ENTRY_TIME = 11 * 3600 + 45 * 60     # 11:45:00 in seconds since midnight
 SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
@@ -21,12 +19,12 @@ SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
 # from the ENAIRE STAR charts (AIP). FILL IN.
 # ---------------------------------------------------------------------------
 STARS = {
-    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": 91.7},
-    "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_nm": 94.5},
-    "MARTA3Z": {"aircraft": "B777", "mlw": 100, "distance_nm": 178.3},
-    "MATEX3Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": 190.0},
-    "LOBAR2W": {"aircraft": "A319", "mlw": 80,  "distance_nm": 151.4},
-    "CASPE2W": {"aircraft": "A320", "mlw": 100, "distance_nm": 164.0},
+    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": None},
+    "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_nm": None},
+    "MARTA3Z": {"aircraft": "B777", "mlw": 100, "distance_nm": None},
+    "MATEX3Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": None},
+    "LOBAR2W": {"aircraft": "A319", "mlw": 80,  "distance_nm": None},
+    "CASPE2W": {"aircraft": "A320", "mlw": 100, "distance_nm": None},
 }
 
 
@@ -158,7 +156,7 @@ def print_scenario(results, order, title):
     """Prints one row per aircraft, in order of arrival at the IAF."""
     print()
     print(title)
-    print("STAR      aircraft  MLW%  h_entry[ft]  flight[min]  entry     IAF       gap[s]")
+    print("STAR      aircraft  MLW%  h_entry[m]  flight[min]  entry     IAF       gap[s]")
 
     for k in range(len(order)):
         star = order[k]
@@ -171,7 +169,7 @@ def print_scenario(results, order, title):
             gap = round(r["iaf_time"] - results[previous]["iaf_time"])
 
         print(star, "  ", STARS[star]["aircraft"], "    ", STARS[star]["mlw"],
-              "   ", round(r["h_entry"] / FT_TO_M),
+              "   ", round(r["h_entry"]),
               "       ", round(r["flight_time"] / 60, 1),
               "      ", time_to_string(r["entry_time"]),
               "", time_to_string(r["iaf_time"]),
