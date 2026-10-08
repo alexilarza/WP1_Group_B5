@@ -53,10 +53,15 @@ def time_to_iaf(trajectory, distance):
         h_entry      altitude at that point [m]
 
     The trajectory has one point per second, so the result is accurate to 1 s.
+
+    If the point is further than the whole CDO from FL400, the aircraft
+    cruises at FL400 until the top of descent (TOD), at the speed it has at
+    the TOD, and then starts the CDO.
     """
     x = trajectory["x"]
     t = trajectory["t"]
     h = trajectory["h"]
+    v = trajectory["v"]
 
     for i in range(len(x)):
         if x[i] <= -distance:
@@ -64,9 +69,14 @@ def time_to_iaf(trajectory, distance):
             h_entry = h[i]
             return flight_time, h_entry
 
-    # If we get here the STAR is longer than the whole CDO from FL400
-    print("WARNING: STAR longer than the CDO from FL400. Result not valid.")
-    return -t[-1], h[-1]
+    # If we get here the point is before the TOD: cruise segment at FL400
+    cdo_distance = -x[-1]                          # m   length of the CDO
+    cruise_distance = distance - cdo_distance      # m   level flight before the TOD
+    cruise_time = cruise_distance / v[-1]          # s   at the TOD speed
+
+    flight_time = -t[-1] + cruise_time
+    h_entry = h[-1]
+    return flight_time, h_entry
 
 
 # ---------------------------------------------------------------------------

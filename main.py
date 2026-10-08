@@ -12,10 +12,11 @@ import matplotlib.pyplot as plt
 from aircraft import AIRCRAFT, FT_TO_M
 from simulator import getCDO, simulate_cdo
 from sequencing import STARS, scenario_1, scenario_2, arrival_order, print_scenario, time_to_string
+from restrictions import check_restrictions, check_all_aircraft
 
 MLW_PERCENTS = [80, 100]
 
-# One colour per aircraft,
+# One colour per aircraft (checked for colour-blind readers),
 # one line style per weight: solid = 100% MLW, dashed = 80% MLW.
 COLOURS = {
     "B767": "#2a78d6",   # blue
@@ -84,7 +85,19 @@ else:
 
 
 # ---------------------------------------------------------------------------
-# 4. Plot: altitude vs distance to the IAF
+# 4. Compliance with the STAR altitude restrictions (SoW section 4)
+#    Needs the restrictions in restrictions.py
+# ---------------------------------------------------------------------------
+check_restrictions(trajectories)
+
+# Every STAR checked with all 10 trajectories, not only the assigned aircraft.
+# If a STAR is longer than the CDO from FL400, the aircraft cruises at FL400
+# until the top of descent (see time_to_iaf in sequencing.py).
+check_all_aircraft(trajectories)
+
+
+# ---------------------------------------------------------------------------
+# 5. Plot: altitude vs distance to the IAF
 # ---------------------------------------------------------------------------
 fig, ax = plt.subplots(figsize=(10, 6))
 

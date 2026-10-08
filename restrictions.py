@@ -12,7 +12,7 @@ Data from the ENAIRE STAR charts (AIP, AD 2-LEBL STAR 3).
 Altitudes are given in ft on the chart and converted to m here.
 """
 
-from aircraft import FT_TO_M
+from aircraft import AIRCRAFT, FT_TO_M
 from sequencing import STARS, time_to_iaf
 
 
@@ -65,7 +65,7 @@ RESTRICTIONS = {
     "LOBAR2W": [
         Restriction("LOBAR", 151.4, None, 28000 * FT_TO_M),             # FL280 or below
         Restriction("PEKIS",  83.4, 16000 * FT_TO_M, 20000 * FT_TO_M),  # FL160 - FL200
-        Restriction("BL461",  18.5, 10000 * FT_TO_M, None),             # FL100 or above
+        Restriction("BL461",  18.5, None, 10000 * FT_TO_M),             # FL100 or below
         Restriction("SLL",     0.0,  6000 * FT_TO_M, None),             # 6000 ft or above
     ],
     "CASPE2W": [
@@ -76,6 +76,24 @@ RESTRICTIONS = {
         Restriction("SLL",     0.0,  6000 * FT_TO_M, None),             # 6000 ft or above
     ],
 }
+
+
+def check_one(h_sim, r):
+    """
+    Compares the simulated altitude h_sim [m] with restriction r.
+    Returns the result as text: "OK", "no restriction",
+    "TOO LOW by ... m" or "TOO HIGH by ... m".
+    """
+    if r.alt_min is None and r.alt_max is None:
+        result = "no restriction"
+    elif r.alt_min is not None and h_sim < r.alt_min:
+        result = "TOO LOW by " + str(round(r.alt_min - h_sim)) + " m"
+    elif r.alt_max is not None and h_sim > r.alt_max:
+        result = "TOO HIGH by " + str(round(h_sim - r.alt_max)) + " m"
+    else:
+        result = "OK"
+
+    return result
 
 
 def check_restrictions(trajectories):
@@ -97,15 +115,7 @@ def check_restrictions(trajectories):
         for r in RESTRICTIONS[star]:
             # Altitude of the CDO trajectory at this waypoint
             flight_time, h_sim = time_to_iaf(trajectory, r.distance_km * 1000)
-
-            if r.alt_min is None and r.alt_max is None:
-                result = "no restriction"
-            elif r.alt_min is not None and h_sim < r.alt_min:
-                result = "TOO LOW by " + str(round(r.alt_min - h_sim)) + " m"
-            elif r.alt_max is not None and h_sim > r.alt_max:
-                result = "TOO HIGH by " + str(round(h_sim - r.alt_max)) + " m"
-            else:
-                result = "OK"
+            result = check_one(h_sim, r)
 
             if r.alt_min is None:
                 min_text = "-"
@@ -123,3 +133,61 @@ def check_restrictions(trajectories):
                   "   ", min_text,
                   "  ", max_text,
                   "  ", result)
+
+
+# ---------------------------------------------------------------------------
+# Every STAR with every simulated trajectory (5 aircraft x 2 weights)
+# ---------------------------------------------------------------------------
+def failed_waypoints(trajectory, star):
+    """
+    Checks one trajectory against all the restrictions of one STAR.
+
+    Returns the list of waypoints where the restriction is not met
+    (an empty list means the trajectory complies with the whole STAR).
+    Waypoints before the top of descent are flown in cruise at FL400
+    (see time_to_iaf in sequencing.py).
+    """
+    failed = []
+    for r in RESTRICTIONS[star]:
+        flight_time, h_sim = time_to_iaf(trajectory, r.distance_km * 1000)
+        result = check_one(h_sim, r)
+
+        if result != "OK" and result != "no restriction":
+            failed.append(r.waypoint)
+
+    return failed
+
+
+def check_all_aircraft(trajectories):
+    """
+    For every STAR, checks the 10 simulated trajectories and prints which
+    ones comply with all the altitude restrictions.
+        OK          complies with every restriction
+        waypoints   names of the waypoints where it does not comply
+    If the STAR is longer than the CDO from FL400, the length of the cruise
+    segment at FL400 before the top of descent is also printed.
+    """
+    print()
+    print("COMPLIANCE OF EVERY TRAJECTORY WITH EVERY STAR")
+
+    for star in RESTRICTIONS:
+        print()
+        print(star)
+        star_km = RESTRICTIONS[star][0].distance_km     # first waypoint = STAR entry
+
+        for name in AIRCRAFT:
+            for pct in [80, 100]:
+                trajectory = trajectories[name, pct]
+                failed = failed_waypoints(trajectory, star)
+
+                if len(failed) == 0:
+                    text = "OK"
+                else:
+                    text = "fails at " + ", ".join(failed)
+
+                # Cruise segment before the top of descent, if there is one
+                cdo_km = -trajectory["x"][-1] / 1000
+                if star_km > cdo_km:
+                    text = text + "  (cruise at FL400 for " + str(round(star_km - cdo_km, 1)) + " km)"
+
+                print("   ", name, pct, "% MLW:", text)
