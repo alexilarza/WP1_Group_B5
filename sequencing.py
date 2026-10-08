@@ -9,22 +9,21 @@ The trajectories come from main.py (dictionary "trajectories").
 Times of day are stored in seconds since midnight. Units: SI.
 """
 
-NM_TO_M = 1852.0                     # m per nautical mile
 ENTRY_TIME = 11 * 3600 + 45 * 60     # 11:45:00 in seconds since midnight
 SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
 
 # ---------------------------------------------------------------------------
 # Arrivals (SoW v1.1, section 3)
-# distance_nm: distance ALONG THE STAR from its first waypoint to the IAF [NM],
-# from the ENAIRE STAR charts (AIP). FILL IN.
+# distance_km: distance ALONG THE STAR from its first waypoint to the IAF [km],
+# from the ENAIRE STAR charts (AIP; the charts give NM, converted to km).
 # ---------------------------------------------------------------------------
 STARS = {
-    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": None},
-    "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_nm": None},
-    "MARTA3Z": {"aircraft": "B777", "mlw": 100, "distance_nm": None},
-    "MATEX3Z": {"aircraft": "B767", "mlw": 80,  "distance_nm": None},
-    "LOBAR2W": {"aircraft": "A319", "mlw": 80,  "distance_nm": None},
-    "CASPE2W": {"aircraft": "A320", "mlw": 100, "distance_nm": None},
+    "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 91.7},
+    "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_km": 94.5},
+    "MARTA3Z": {"aircraft": "B777", "mlw": 100, "distance_km": 178.3},
+    "MATEX3Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 190.0},
+    "LOBAR2W": {"aircraft": "A319", "mlw": 80,  "distance_km": 151.4},
+    "CASPE2W": {"aircraft": "A320", "mlw": 100, "distance_km": 164.0},
 }
 
 
@@ -76,12 +75,12 @@ def scenario_1(trajectories):
     for star in STARS:
         data = STARS[star]
 
-        if data["distance_nm"] is None:
+        if data["distance_km"] is None:
             print("Missing STAR distance for", star, "-> skipped")
             continue
 
         trajectory = trajectories[data["aircraft"], data["mlw"]]
-        distance = data["distance_nm"] * NM_TO_M
+        distance = data["distance_km"] * 1000          # km -> m
         flight_time, h_entry = time_to_iaf(trajectory, distance)
 
         results[star] = {
