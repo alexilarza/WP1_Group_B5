@@ -195,8 +195,6 @@ def check_all_aircraft(trajectories):
 
 def plot_all_restrictions(ax, restrictions_dict):
     waypoints = {}
-
-    # Agrupar els waypoints i eliminar duplicats
     for star, restrictions in restrictions_dict.items():
         for r in restrictions:
             if r.alt_min is None and r.alt_max is None:
@@ -204,11 +202,7 @@ def plot_all_restrictions(ax, restrictions_dict):
 
             if r.waypoint not in waypoints:
                 waypoints[r.waypoint] = r
-
-    # Altitud màxima del gràfic, en metres
     max_alt = 12000
-
-    # Ordenar els waypoints per distància
     items = sorted(
         waypoints.items(),
         key=lambda item: item[1].distance_km,
@@ -228,22 +222,22 @@ def plot_all_restrictions(ax, restrictions_dict):
         "tab:cyan"
     ]
 
-    # Conservar la llegenda original dels avions
+
     old_legend = ax.get_legend()
 
     if old_legend is not None:
         ax.add_artist(old_legend)
 
-    # Dibuixar les restriccions
+
     for i, (waypoint, r) in enumerate(items):
         x = -r.distance_km
         color = colors[i % len(colors)]
 
-        # Límits d'altitud
+
         alt_min = r.alt_min if r.alt_min is not None else 0
         alt_max = r.alt_max if r.alt_max is not None else max_alt
 
-        # Franja vertical de color
+
         ax.fill_between(
             [x - 0.7, x + 0.7],
             alt_min,
@@ -254,7 +248,6 @@ def plot_all_restrictions(ax, restrictions_dict):
             zorder=1
         )
 
-        # Línia vertical de restricció
         ax.vlines(
             x,
             alt_min,
@@ -264,7 +257,6 @@ def plot_all_restrictions(ax, restrictions_dict):
             zorder=2
         )
 
-        # Marca del límit mínim
         if r.alt_min is not None:
             ax.plot(
                 x,
@@ -276,7 +268,6 @@ def plot_all_restrictions(ax, restrictions_dict):
                 zorder=3
             )
 
-        # Marca del límit màxim
         if r.alt_max is not None:
             ax.plot(
                 x,
@@ -288,7 +279,6 @@ def plot_all_restrictions(ax, restrictions_dict):
                 zorder=3
             )
 
-        # Posició del número dins de la franja
         if r.alt_min is not None and r.alt_max is not None:
             y_marker = (alt_min + alt_max) / 2
         elif r.alt_min is not None:
@@ -296,7 +286,6 @@ def plot_all_restrictions(ax, restrictions_dict):
         else:
             y_marker = max(alt_max - 250, 0)
 
-        # Número identificador del waypoint
         ax.annotate(
             str(i + 1),
             xy=(x, y_marker),
@@ -314,13 +303,11 @@ def plot_all_restrictions(ax, restrictions_dict):
             zorder=5
         )
 
-    # Crear un eix independent per a la llegenda
     fig = ax.figure
 
     legend_ax = fig.add_axes([0.80, 0.0, 0.19, 1.0])
     legend_ax.axis("off")
 
-    # Crear els elements de la llegenda
     legend_items = []
 
     for i, (waypoint, r) in enumerate(items):
@@ -338,7 +325,6 @@ def plot_all_restrictions(ax, restrictions_dict):
 
         legend_items.append(handle)
 
-    # Llegenda dels waypoints a la dreta i centrada verticalment
     legend_ax.legend(
         handles=legend_items,
         title="Waypoints amb restricció",

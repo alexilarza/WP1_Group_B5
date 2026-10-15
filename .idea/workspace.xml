@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="atmosphere">
+    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="Plot Restrictions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restrictions.py" beforeDir="false" afterPath="$PROJECT_DIR$/restrictions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sequencing.py" beforeDir="false" afterPath="$PROJECT_DIR$/sequencing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,24 +47,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.atmosphere.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.performance.executor": "Run",
-    "Python.restrictions.executor": "Run",
-    "Python.sequencing.executor": "Run",
-    "Python.simulator.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.atmosphere.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.performance.executor&quot;: &quot;Run&quot;,
+    &quot;Python.restrictions.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sequencing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simulator.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="atmosphere" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="WP1_B5" />
@@ -324,12 +322,21 @@
       <option name="project" value="LOCAL" />
       <updated>1791444811151</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Plot Restrictions">
+      <option name="closed" value="true" />
+      <created>1792048190172</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1792048190172</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Start" />
     <MESSAGE value="atmosphere" />
-    <option name="LAST_COMMIT_MESSAGE" value="atmosphere" />
+    <MESSAGE value="Plot Restrictions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Plot Restrictions" />
   </component>
 </project>
