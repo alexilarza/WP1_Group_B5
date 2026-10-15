@@ -1,21 +1,3 @@
-"""
-Aircraft performance in descent: thrust, minimum-RoD speed, rate of descent
-and fuel flow.
-
-Model: BADA 3.10 (SoW, Annex A).
-
-Assumptions:
-  - small descent angle -> L = m g  (same hypothesis used to derive v_min_rod)
-  - thrust aligned with the flight path, no wind
-  - parabolic drag polar: CD = CD0 + CD2 * CL^2
-  - always clean configuration: the IAF is at 6000 ft and the simulation
-    goes upwards from there, so the approach configuration is never reached
-
-Units: SI everywhere, except inside the BADA formulas that require
-ft (thrust) and kt / kN / min (fuel flow). Those conversions are done
-inside each function.
-"""
-
 import math
 from atmosphere import isa
 from aircraft import FT_TO_M, KT_TO_MS

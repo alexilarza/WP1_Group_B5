@@ -1,14 +1,3 @@
-"""
-Arrival sequencing at LEBL RWY 24L (SoW v1.1, section 3).
-
-Scenario 1: all aircraft reach the first waypoint of their STAR at 11:45:00.
-Scenario 2: consecutive aircraft reach the IAF exactly 2 minutes apart,
-            keeping the order of scenario 1 and without moving the first one.
-
-The trajectories come from main.py (dictionary "trajectories").
-Times of day are stored in seconds since midnight. Units: SI.
-"""
-
 ENTRY_TIME = 11 * 3600 + 45 * 60     # 11:45:00 in seconds since midnight
 SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
 

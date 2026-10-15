@@ -1,17 +1,3 @@
-"""
-STAR altitude restrictions at LEBL RWY 24L (SoW v1.1, section 4).
-
-Each restriction is stored as a minimum and/or maximum altitude at a
-waypoint of the STAR. This covers every type of restriction on the chart:
-    AT       FL150         -> alt_min = alt_max = FL150
-    AT/ABOVE FL150 or more -> alt_min = FL150, alt_max = None
-    AT/BELOW FL150 or less -> alt_min = None,  alt_max = FL150
-    WINDOW   FL120-FL150   -> alt_min = FL120, alt_max = FL150
-
-Data from the ENAIRE STAR charts (AIP, AD 2-LEBL STAR 3).
-Altitudes are given in ft on the chart and converted to m here.
-"""
-
 from aircraft import AIRCRAFT, FT_TO_M
 from sequencing import STARS, time_to_iaf
 

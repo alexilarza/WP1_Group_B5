@@ -1,13 +1,3 @@
-"""
-Main script of WP1: generates all the CDO trajectories with a single click
-and plots them.
-
-Run with: python main.py
-
-All trajectories are stored in the dictionary "trajectories" so they can be
-reused in later tasks (arrival sequencing, STAR altitude constraints).
-"""
-
 import matplotlib.pyplot as plt
 from aircraft import AIRCRAFT, FT_TO_M
 from simulator import getCDO, simulate_cdo
