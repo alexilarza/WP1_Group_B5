@@ -1,0 +1,448 @@
+Index: aircraft.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>FT_TO_M = 0.3048\r\nKT_TO_MS = 0.514444\r\n\r\nclass Aircraft:\r\n    def __init__(self, name, mlw, mtow, max_payload, S,\r\n                 cd0_clean, cd2_clean, cd0_app, cd2_app,\r\n                 hp_desc, ct_desc_high, ct_desc_low, ct_desc_app,\r\n                 ct1, ct2, ct3, cf1, cf2):\r\n        self.name = name\r\n        self.mlw = mlw                    # kg\r\n        self.mtow = mtow                  # kg  (no usado en WP1)\r\n        self.max_payload = max_payload    # kg  (no usado en WP1)\r\n        self.S = S                        # m^2\r\n        self.cd0_clean = cd0_clean        # -\r\n        self.cd2_clean = cd2_clean        # -\r\n        self.cd0_app = cd0_app            # -   (no usado: IAF a 6000 ft)\r\n        self.cd2_app = cd2_app            # -   (no usado)\r\n        self.hp_desc = hp_desc            # converted to m\r\n        self.ct_desc_high = ct_desc_high  # -\r\n        self.ct_desc_low = ct_desc_low    # -\r\n        self.ct_desc_app = ct_desc_app    # -   (no usado)\r\n        self.ct1 = ct1                    # N\r\n        self.ct2 = ct2                    # ft  -- NO convertir\r\n        self.ct3 = ct3                    # 1/ft^2 -- NO convertir\r\n        self.cf1 = cf1                    # kg/(min*kN) -- NO convertir\r\n        self.cf2 = cf2                    # kt -- NO convertir\r\n\r\n\r\nAIRCRAFT = {\r\n    \"B767\": Aircraft(\r\n        name=\"B767\",\r\n        mlw=145.15e3, mtow=204.10e3, max_payload=46.50e3, S=283.50,\r\n        cd0_clean=0.01740, cd2_clean=0.04590,\r\n        cd0_app=0.01400,   cd2_app=0.04900,\r\n        hp_desc=26418 * FT_TO_M, # Converted to m\r\n        ct_desc_high=0.064359, ct_desc_low=0.055988, ct_desc_app=0.12475,\r\n        ct1=351670, ct2=44673, ct3=1.0129e-10,\r\n        cf1=0.54005, cf2=557.82),\r\n\r\n    \"B777\": Aircraft(\r\n        name=\"B777\",\r\n        mlw=237.68e3, mtow=299.30e3, max_payload=64.90e3, S=428.04,\r\n        cd0_clean=0.01570, cd2_clean=0.04200,\r\n        cd0_app=0.01730,   cd2_app=0.04840,\r\n        hp_desc=36122 * FT_TO_M, # Converted to m\r\n        ct_desc_high=0.044239, ct_desc_low=0.041065, ct_desc_app=0.092921,\r\n        ct1=425770, ct2=48987, ct3=6.6146e-11,\r\n        cf1=0.87843, cf2=3689.7),\r\n\r\n    \"B737\": Aircraft(\r\n        name=\"B737\",\r\n        mlw=51.71e3, mtow=70.80e3, max_payload=16.92e3, S=124.65,\r\n        cd0_clean=0.02350, cd2_clean=0.04450,\r\n        cd0_app=0.02700,   cd2_app=0.04410,\r\n        hp_desc=30152 * FT_TO_M, # Converted to m\r\n        ct_desc_high=0.036336, ct_desc_low=0.053395, ct_desc_app=0.16440,\r\n        ct1=145730, ct2=55638, ct3=1.4200e-11,\r\n        cf1=0.94680, cf2=1.0e14),\r\n\r\n    \"A320\": Aircraft(\r\n        name=\"A320\",\r\n        mlw=64.50e3, mtow=77.00e3, max_payload=21.50e3, S=122.60,\r\n        cd0_clean=0.02400, cd2_clean=0.03750,\r\n        cd0_app=0.02420,   cd2_app=0.04690,\r\n        hp_desc=12398 * FT_TO_M, # Converted to m\r\n        ct_desc_high=0.045711, ct_desc_low=0.027207, ct_desc_app=0.13981,\r\n        ct1=136050, ct2=52238, ct3=2.6637e-11,\r\n        cf1=0.94000, cf2=1.0e5),\r\n\r\n    \"A319\": Aircraft(\r\n        name=\"A319\",\r\n        mlw=61.00e3, mtow=70.00e3, max_payload=17.00e3, S=122.60,\r\n        cd0_clean=0.02800, cd2_clean=0.03100,\r\n        cd0_app=0.02840,   cd2_app=0.03760,\r\n        hp_desc=27726 * FT_TO_M, # Converted to m\r\n        ct_desc_high=0.083084, ct_desc_low=0.051765, ct_desc_app=0.14767,\r\n        ct1=139000, ct2=58900, ct3=5.7200e-15,\r\n        cf1=0.68800, cf2=1670.0),\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/aircraft.py b/aircraft.py
+--- a/aircraft.py	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ b/aircraft.py	(date 1791439506121)
+@@ -6,6 +6,7 @@
+                  cd0_clean, cd2_clean, cd0_app, cd2_app,
+                  hp_desc, ct_desc_high, ct_desc_low, ct_desc_app,
+                  ct1, ct2, ct3, cf1, cf2):
++
+         self.name = name
+         self.mlw = mlw                    # kg
+         self.mtow = mtow                  # kg  (no usado en WP1)
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\r\nMain script of WP1: generates all the CDO trajectories with a single click\r\nand plots them.\r\n\r\nRun with: python main.py\r\n\r\nAll trajectories are stored in the dictionary \"trajectories\" so they can be\r\nreused in later tasks (arrival sequencing, STAR altitude constraints).\r\n\"\"\"\r\n\r\nimport matplotlib.pyplot as plt\r\nfrom aircraft import AIRCRAFT, FT_TO_M\r\nfrom simulator import getCDO, simulate_cdo\r\n\r\nMLW_PERCENTS = [80, 100]\r\n\r\n# One colour per aircraft (checked for colour-blind readers),\r\n# one line style per weight: solid = 100% MLW, dashed = 80% MLW.\r\nCOLOURS = {\r\n    \"B767\": \"#2a78d6\",   # blue\r\n    \"B777\": \"#eb6834\",   # orange\r\n    \"B737\": \"#1baf7a\",   # aqua\r\n    \"A320\": \"#eda100\",   # yellow\r\n    \"A319\": \"#e87ba4\",   # pink\r\n}\r\nLINE_STYLES = {\r\n    100: \"-\",\r\n    80: \"--\",\r\n}\r\n\r\n\r\n# ---------------------------------------------------------------------------\r\n# 1. Compute every trajectory\r\n# ---------------------------------------------------------------------------\r\n# trajectories[\"B767\", 100] -> dictionary with lists x, h, t, m, v, rod\r\ntrajectories = {}\r\n\r\nfor name in AIRCRAFT:\r\n    for pct in MLW_PERCENTS:\r\n        trajectories[name, pct] = simulate_cdo(name, pct)\r\n\r\n# getCDO is the function required by the SoW. Example of use:\r\nx_b767, h_b767 = getCDO(\"B767\", 100)\r\n\r\n\r\n# ---------------------------------------------------------------------------\r\n# 2. Summary table in the console\r\n# ---------------------------------------------------------------------------\r\nprint(\"aircraft  MLW%   distance[km]  time[min]  fuel[kg]\")\r\nfor name in AIRCRAFT:\r\n    for pct in MLW_PERCENTS:\r\n        traj = trajectories[name, pct]\r\n        distance = -traj[\"x\"][-1] / 1000\r\n        time = -traj[\"t\"][-1] / 60\r\n        fuel = traj[\"m\"][-1] - traj[\"m\"][0]\r\n        print(name, \"    \", pct,\r\n              \"     \", round(distance, 1),\r\n              \"       \", round(time, 1),\r\n              \"     \", round(fuel))\r\n\r\n\r\n# ---------------------------------------------------------------------------\r\n# 3. Plot: altitude vs distance to the IAF\r\n# ---------------------------------------------------------------------------\r\nfig, ax = plt.subplots(figsize=(10, 6))\r\n\r\nfor name in AIRCRAFT:\r\n    for pct in MLW_PERCENTS:\r\n        traj = trajectories[name, pct]\r\n        x_km = [x / 1000 for x in traj[\"x\"]]\r\n        ax.plot(x_km, traj[\"h\"],\r\n                color=COLOURS[name],\r\n                linestyle=LINE_STYLES[pct],\r\n                linewidth=2,\r\n                label=name + \" [\" + str(pct) + \"% MLW]\")\r\n\r\n# Reference lines: IAF altitude and FL400\r\nax.axhline(6000 * FT_TO_M, color=\"grey\", linewidth=0.8, linestyle=\":\")\r\nax.axhline(40000 * FT_TO_M, color=\"grey\", linewidth=0.8, linestyle=\":\")\r\nax.text(-205, 6000 * FT_TO_M + 150, \"IAF (6000 ft)\", ha=\"left\", color=\"dimgrey\", fontsize=9)\r\nax.text(-5, 40000 * FT_TO_M - 450, \"FL400\", ha=\"right\", color=\"dimgrey\", fontsize=9)\r\n\r\nax.set_xlabel(\"Distance to the IAF, x [km]\")\r\nax.set_ylabel(\"Altitude, h [m]\")\r\nax.set_title(\"CDO descent trajectories (idle thrust, minimum rate of descent, ISA)\")\r\nax.grid(True, color=\"lightgrey\", linewidth=0.5)\r\nax.legend(fontsize=9, ncol=2)\r\n\r\nplt.tight_layout()\r\nplt.savefig(\"cdo_trajectories.png\", dpi=200)   # for the paper\r\nplt.show()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ b/main.py	(date 1791442210427)
+@@ -80,6 +80,9 @@
+ ax.text(-205, 6000 * FT_TO_M + 150, "IAF (6000 ft)", ha="left", color="dimgrey", fontsize=9)
+ ax.text(-5, 40000 * FT_TO_M - 450, "FL400", ha="right", color="dimgrey", fontsize=9)
+ 
++plt.plot(-91.7, 3353, '.r')
++plt.plot(-91.7, 7620, '.r')
++
+ ax.set_xlabel("Distance to the IAF, x [km]")
+ ax.set_ylabel("Altitude, h [m]")
+ ax.set_title("CDO descent trajectories (idle thrust, minimum rate of descent, ISA)")
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ /dev/null	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
+@@ -1,91 +0,0 @@
+-Index: atmosphere.py
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>\"\"\"\nModel of International Standard Atmosphere (ISA).\nGives back air density at a given altitude.\n\nValid between 0 and 20000m. The rang of the project goes within it.\n\nReference: M. Cavcar, \"The International Standard Atmosphere (ISA)\",\nequations (1), (7), (8) y (9).\n\nUnits: altitude in m, temperature in K, pressure in Pa, density in kg/m^3.\n\"\"\"\n\nimport math\n\nT0 = 288.15          # K         temperatura a nivel del mar\nP0 = 101325.0        # Pa        presion a nivel del mar\nLAMBDA = 0.0065      # K/m       gradiente termico en la troposfera\nR = 287.04           # J/(kg K)  constante del aire\nG = 9.80665          # m/s^2     gravedad estandar\nEXP_TROPO = 5.2561   # -         exponente de la ec. (7)\n\nH11 = 11000.0        # m         altitud de la tropopausa\nT11 = 216.65         # K         temperatura en la tropopausa\nP11 = 22632.0        # Pa        presion en la tropopausa (226.32 hPa)\n\nH_MIN = 0.0          # m         limite inferior del modelo\nH_MAX = 20000.0      # m         limite superior del modelo\n\n\ndef isa(h):\n    \"\"\"\n    Devuelve la densidad del aire [kg/m^3] a la altitud h [m].\n    \"\"\"\n\n    # 1. Avisar si la altitud esta fuera del rango del modelo\n    # El calculo sigue igualmente, pero el mensaje te indica que algo va mal\n    # en el bucle (error de signo o altitud en pies en vez de metros).\n    if h < H_MIN:\n        print(\"AVISO: altitud negativa:\", h, \"m. Revisa el bucle.\")\n\n    if h > H_MAX:\n        print(\"AVISO: altitud por encima de 20000 m:\", h, \"m. Revisa las unidades.\")\n\n    # 2. Temperatura y presion segun la capa\n    if h <= H11:\n        # Troposfera\n        T = T0 - LAMBDA * h                               # Cavcar ec. (1)\n        p = P0 * (1 - LAMBDA * h / T0) ** EXP_TROPO       # Cavcar ec. (7)\n    else:\n        # Estratosfera: temperatura constante.\n        # La presion parte de la tropopausa (P11), no del nivel del mar.\n        T = T11\n        p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)\n\n    # 3. Densidad con la ley de gases ideales\n    rho = p / (R * T)                                     # Cavcar ec. (9)\n\n    return rho\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/atmosphere.py b/atmosphere.py
+---- a/atmosphere.py	(revision 0650e10e1411462d6c7b355bceadf438e6a2a7bf)
+-+++ b/atmosphere.py	(date 1790838349822)
+-@@ -29,30 +29,28 @@
+- 
+- def isa(h):
+-     """
+--    Devuelve la densidad del aire [kg/m^3] a la altitud h [m].
+-+    Returns air density [kg/m^3] at altitude h [m].
+-     """
+- 
+--    # 1. Avisar si la altitud esta fuera del rango del modelo
+--    # El calculo sigue igualmente, pero el mensaje te indica que algo va mal
+--    # en el bucle (error de signo o altitud en pies en vez de metros).
+-+    # Tells if altitude is not in the range
+-     if h < H_MIN:
+-         print("AVISO: altitud negativa:", h, "m. Revisa el bucle.")
+- 
+-     if h > H_MAX:
+-         print("AVISO: altitud por encima de 20000 m:", h, "m. Revisa las unidades.")
+- 
+--    # 2. Temperatura y presion segun la capa
+-+    # Temperature and pressure in troposphere and stratosphere
+-     if h <= H11:
+--        # Troposfera
+-+        # Troposphere
+-         T = T0 - LAMBDA * h                               # Cavcar ec. (1)
+-         p = P0 * (1 - LAMBDA * h / T0) ** EXP_TROPO       # Cavcar ec. (7)
+-     else:
+--        # Estratosfera: temperatura constante.
+--        # La presion parte de la tropopausa (P11), no del nivel del mar.
+-+        # Stratosphere: temperature constant.
+-+
+-         T = T11
+-         p = P11 * math.exp(-G / (R * T11) * (h - H11))    # Cavcar ec. (8)
+- 
+--    # 3. Densidad con la ley de gases ideales
+-+    # Density con la ley de gases ideales
+-     rho = p / (R * T)                                     # Cavcar ec. (9)
+- 
+-     return rho
+-Index: .idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"atmosphere\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/atmosphere.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/atmosphere.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;alexilarza&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;url&quot;: &quot;https://github.com/alexilarza/WP1_Group_B5.git&quot;,\n    &quot;accountId&quot;: &quot;59e82cf3-2835-42d9-95ba-334c1b126cca&quot;\n  }\n}</component>\n  <component name=\"McpProjectServerCommands\">\n    <commands />\n    <urls />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 6\n}</component>\n  <component name=\"ProjectId\" id=\"3JlOGwg2yTpYCBBtmjPwyemUzDH\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\n    \"Python.atmosphere.executor\": \"Run\",\n    \"RunOnceActivity.MCP Project settings loaded\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.git.unshallow\": \"true\",\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"junie.onboarding.icon.badge.shown\": \"true\",\n    \"to.speed.mode.migration.done\": \"true\"\n  }\n}]]></component>\n  <component name=\"RunManager\">\n    <configuration name=\"atmosphere\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"WP1_B5\" />\n      <option name=\"ENV_FILES\" value=\"\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"RUN_TOOL\" value=\"\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/atmosphere.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"\" />\n      <created>1790232095314</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1790232095314</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Start\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790236200521</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790236200521</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Start\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790236309660</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790236309660</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"atmosphere\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1790837380652</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1790837380652</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"4\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Start\" />\n    <MESSAGE value=\"atmosphere\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"atmosphere\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+---- a/.idea/workspace.xml	(revision 0650e10e1411462d6c7b355bceadf438e6a2a7bf)
+-+++ b/.idea/workspace.xml	(date 1790838688481)
+-@@ -125,7 +125,31 @@
+-       <option name="project" value="LOCAL" />
+-       <updated>1790837380652</updated>
+-     </task>
+--    <option name="localTasksCounter" value="4" />
+-+    <task id="LOCAL-00004" summary="atmosphere">
+-+      <option name="closed" value="true" />
+-+      <created>1790837716675</created>
+-+      <option name="number" value="00004" />
+-+      <option name="presentableId" value="LOCAL-00004" />
+-+      <option name="project" value="LOCAL" />
+-+      <updated>1790837716675</updated>
+-+    </task>
+-+    <task id="LOCAL-00005" summary="atmosphere">
+-+      <option name="closed" value="true" />
+-+      <created>1790837869988</created>
+-+      <option name="number" value="00005" />
+-+      <option name="presentableId" value="LOCAL-00005" />
+-+      <option name="project" value="LOCAL" />
+-+      <updated>1790837869988</updated>
+-+    </task>
+-+    <task id="LOCAL-00006" summary="atmosphere">
+-+      <option name="closed" value="true" />
+-+      <created>1790837974152</created>
+-+      <option name="number" value="00006" />
+-+      <option name="presentableId" value="LOCAL-00006" />
+-+      <option name="project" value="LOCAL" />
+-+      <updated>1790837974152</updated>
+-+    </task>
+-+    <option name="localTasksCounter" value="7" />
+-     <servers />
+-   </component>
+-   <component name="VcsManagerConfiguration">
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026__09_21__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026__09_21__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026__09_21__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026__09_21__Changes_.xml	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ /dev/null	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]" date="1790839282943" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 01/10/2026, 09:21 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/WP1_B5.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/.venv\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"~\\PycharmProjects\\WP1_Group_B5\\.venv\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/WP1_B5.iml b/.idea/WP1_B5.iml
+--- a/.idea/WP1_B5.iml	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ b/.idea/WP1_B5.iml	(date 1791439588314)
+@@ -4,7 +4,7 @@
+     <content url="file://$MODULE_DIR$">
+       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+     </content>
+-    <orderEntry type="jdk" jdkName="~\PycharmProjects\WP1_Group_B5\.venv" jdkType="Python SDK" />
++    <orderEntry type="jdk" jdkName="Python 3.14" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"atmosphere\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;alexilarza&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/alexilarza/WP1_Group_B5.git&quot;,\r\n    &quot;accountId&quot;: &quot;59e82cf3-2835-42d9-95ba-334c1b126cca&quot;\r\n  }\r\n}</component>\r\n  <component name=\"McpProjectServerCommands\">\r\n    <commands />\r\n    <urls />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 6\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3JlOGwg2yTpYCBBtmjPwyemUzDH\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"Python.atmosphere.executor\": \"Run\",\r\n    \"Python.main.executor\": \"Run\",\r\n    \"Python.performance.executor\": \"Run\",\r\n    \"Python.simulator.executor\": \"Run\",\r\n    \"RunOnceActivity.MCP Project settings loaded\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"junie.onboarding.icon.badge.shown\": \"true\",\r\n    \"to.speed.mode.migration.done\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"atmosphere\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"WP1_B5\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"RUN_TOOL\" value=\"\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/atmosphere.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"WP1_B5\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"RUN_TOOL\" value=\"\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"performance\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"WP1_B5\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"RUN_TOOL\" value=\"\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/performance.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"simulator\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"WP1_B5\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"SDK_NAME\" value=\"Python 3.14 (PyCharmMiscProject)\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"RUN_TOOL\" value=\"\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/simulator.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"dd1297f4-0abb-4569-9140-ea133ea4f486\" name=\"Changes\" comment=\"\" />\r\n      <created>1790232095314</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1790232095314</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Start\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790236200521</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790236200521</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Start\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790236309660</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790236309660</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"atmosphere\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790837380652</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790837380652</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"atmosphere\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790839451566</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790839451566</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"atmosphere\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790839531031</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790839531031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"atmosphere\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790839870878</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790839870878</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"atmosphere\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1790841197749</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1790841197749</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Start\" />\r\n    <MESSAGE value=\"atmosphere\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"atmosphere\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ b/.idea/workspace.xml	(date 1791452206004)
+@@ -4,11 +4,22 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="atmosphere" />
++    <list default="true" id="dd1297f4-0abb-4569-9140-ea133ea4f486" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/WP1_B5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/WP1_B5.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_10_2026,_09_21_[Changes]/shelved.patch" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/aircraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/aircraft.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/cdo_trajectories.png" beforeDir="false" afterPath="$PROJECT_DIR$/cdo_trajectories.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="EmbeddingIndexingInfo">
++    <option name="cachedIndexableFilesCount" value="20" />
+   </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+@@ -26,12 +37,12 @@
+     &quot;assignee&quot;: &quot;alexilarza&quot;
+   }
+ }</component>
+-  <component name="GithubPullRequestsUISettings">{
+-  &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/alexilarza/WP1_Group_B5.git&quot;,
+-    &quot;accountId&quot;: &quot;59e82cf3-2835-42d9-95ba-334c1b126cca&quot;
+-  }
+-}</component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/alexilarza/WP1_Group_B5.git",
++    "accountId": "9d41dffb-b718-4e11-a05b-46d3f0643431"
++  }
++}]]></component>
+   <component name="McpProjectServerCommands">
+     <commands />
+     <urls />
+@@ -44,124 +55,23 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+-    "Python.atmosphere.executor": "Run",
+-    "Python.main.executor": "Run",
+-    "Python.performance.executor": "Run",
+-    "Python.simulator.executor": "Run",
+-    "RunOnceActivity.MCP Project settings loaded": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+-    "git-widget-placeholder": "main",
+-    "junie.onboarding.icon.badge.shown": "true",
+-    "to.speed.mode.migration.done": "true"
+-  }
+-}]]></component>
+-  <component name="RunManager">
+-    <configuration name="atmosphere" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="WP1_B5" />
+-      <option name="ENV_FILES" value="" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="" />
+-      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="IS_MODULE_SDK" value="false" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="RUN_TOOL" value="" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/atmosphere.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="WP1_B5" />
+-      <option name="ENV_FILES" value="" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="" />
+-      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="IS_MODULE_SDK" value="false" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="RUN_TOOL" value="" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-    <configuration name="performance" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="WP1_B5" />
+-      <option name="ENV_FILES" value="" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="" />
+-      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="IS_MODULE_SDK" value="false" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="RUN_TOOL" value="" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/performance.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-    <configuration name="simulator" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="WP1_B5" />
+-      <option name="ENV_FILES" value="" />
+-      <option name="INTERPRETER_OPTIONS" value="" />
+-      <option name="PARENT_ENVS" value="true" />
+-      <envs>
+-        <env name="PYTHONUNBUFFERED" value="1" />
+-      </envs>
+-      <option name="SDK_HOME" value="" />
+-      <option name="SDK_NAME" value="Python 3.14 (PyCharmMiscProject)" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+-      <option name="IS_MODULE_SDK" value="false" />
+-      <option name="ADD_CONTENT_ROOTS" value="true" />
+-      <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="RUN_TOOL" value="" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/simulator.py" />
+-      <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="false" />
+-      <option name="EMULATE_TERMINAL" value="false" />
+-      <option name="MODULE_MODE" value="false" />
+-      <option name="REDIRECT_INPUT" value="false" />
+-      <option name="INPUT_FILE" value="" />
+-      <method v="2" />
+-    </configuration>
+-  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
++    &quot;Python.main.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
++    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
++  }
++}</component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+-        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
++        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
+       </set>
+     </attachedChunks>
+   </component>
+@@ -173,68 +83,6 @@
+       <option name="presentableId" value="Default" />
+       <updated>1790232095314</updated>
+     </task>
+-    <task id="LOCAL-00001" summary="Start">
+-      <option name="closed" value="true" />
+-      <created>1790236200521</created>
+-      <option name="number" value="00001" />
+-      <option name="presentableId" value="LOCAL-00001" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790236200521</updated>
+-    </task>
+-    <task id="LOCAL-00002" summary="Start">
+-      <option name="closed" value="true" />
+-      <created>1790236309660</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790236309660</updated>
+-    </task>
+-    <task id="LOCAL-00003" summary="atmosphere">
+-      <option name="closed" value="true" />
+-      <created>1790837380652</created>
+-      <option name="number" value="00003" />
+-      <option name="presentableId" value="LOCAL-00003" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790837380652</updated>
+-    </task>
+-    <task id="LOCAL-00004" summary="atmosphere">
+-      <option name="closed" value="true" />
+-      <created>1790839451566</created>
+-      <option name="number" value="00004" />
+-      <option name="presentableId" value="LOCAL-00004" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790839451566</updated>
+-    </task>
+-    <task id="LOCAL-00005" summary="atmosphere">
+-      <option name="closed" value="true" />
+-      <created>1790839531031</created>
+-      <option name="number" value="00005" />
+-      <option name="presentableId" value="LOCAL-00005" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790839531031</updated>
+-    </task>
+-    <task id="LOCAL-00006" summary="atmosphere">
+-      <option name="closed" value="true" />
+-      <created>1790839870878</created>
+-      <option name="number" value="00006" />
+-      <option name="presentableId" value="LOCAL-00006" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790839870878</updated>
+-    </task>
+-    <task id="LOCAL-00007" summary="atmosphere">
+-      <option name="closed" value="true" />
+-      <created>1790841197749</created>
+-      <option name="number" value="00007" />
+-      <option name="presentableId" value="LOCAL-00007" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1790841197749</updated>
+-    </task>
+-    <option name="localTasksCounter" value="8" />
+     <servers />
+   </component>
+-  <component name="VcsManagerConfiguration">
+-    <MESSAGE value="Start" />
+-    <MESSAGE value="atmosphere" />
+-    <option name="LAST_COMMIT_MESSAGE" value="atmosphere" />
+-  </component>
+ </project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Black\">\r\n    <option name=\"sdkName\" value=\"Python 3.14 (WP1_B5)\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"~\\PycharmProjects\\WP1_Group_B5\\.venv\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 9f512e5ae9394ad022b69703785346ad5ba1f85e)
++++ b/.idea/misc.xml	(date 1791439588323)
+@@ -3,5 +3,5 @@
+   <component name="Black">
+     <option name="sdkName" value="Python 3.14 (WP1_B5)" />
+   </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="~\PycharmProjects\WP1_Group_B5\.venv" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
