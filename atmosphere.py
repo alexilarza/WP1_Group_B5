@@ -1,15 +1,3 @@
-"""
-Model of International Standard Atmosphere (ISA).
-Gives back air density at a given altitude.
-
-Valid between 0 and 20000m. The range of the project goes within it.
-
-Reference: M. Cavcar, "The International Standard Atmosphere (ISA)",
-equations (1), (7), (8) and (9).
-
-Units: altitude in m, temperature in K, pressure in Pa, density in kg/m^3.
-"""
-
 import math
 
 T0 = 288.15          # K         Temperature at sea level

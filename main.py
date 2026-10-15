@@ -7,11 +7,12 @@ Run with: python main.py
 All trajectories are stored in the dictionary "trajectories" so they can be
 reused in later tasks (arrival sequencing, STAR altitude constraints).
 """
+
 import matplotlib.pyplot as plt
 from aircraft import AIRCRAFT, FT_TO_M
 from simulator import getCDO, simulate_cdo
 from sequencing import STARS, scenario_1, scenario_2, arrival_order, print_scenario, time_to_string
-from restrictions import check_restrictions, check_all_aircraft, plot_all_restrictions, RESTRICTIONS
+from restrictions import check_restrictions, check_all_aircraft
 
 MLW_PERCENTS = [80, 100]
 
@@ -122,13 +123,6 @@ ax.set_title("CDO descent trajectories (idle thrust, minimum rate of descent, IS
 ax.grid(True, color="lightgrey", linewidth=0.5)
 ax.legend(fontsize=9, ncol=2)
 
-plot_all_restrictions(ax, RESTRICTIONS)
-
-plt.subplots_adjust(
-    left=0.10,
-    right=0.78,
-    top=0.95,
-    bottom=0.10
-)
+plt.tight_layout()
 plt.savefig("cdo_trajectories.png", dpi=200)   # for the paper
 plt.show()

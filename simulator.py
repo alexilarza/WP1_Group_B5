@@ -1,19 +1,3 @@
-"""
-CDO trajectory simulator.
-
-The trajectory is simulated BACKWARDS in time: it starts at the Initial
-Approach Fix (IAF), where the weight is known (a percentage of the MLW),
-and goes up until FL400. This is done because the weight at the Top of
-Descent is unknown (WP1 Simulator development slides, 6-7).
-
-Coordinates:
-  x = 0 at the IAF, negative before it (the aircraft is still far away)
-  h = altitude above sea level
-  t = 0 at the IAF, negative before it
-
-Units: SI (m, s, kg, m/s).
-"""
-
 import math
 from aircraft import AIRCRAFT, FT_TO_M
 from performance import descent_state
