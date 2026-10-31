@@ -327,7 +327,7 @@ def plot_all_restrictions(ax, restrictions_dict):
 
     legend_ax.legend(
         handles=legend_items,
-        title="Waypoints amb restricció",
+        title="Waypoints with restriction",
         loc="center left",
         fontsize=8,
         title_fontsize=9
