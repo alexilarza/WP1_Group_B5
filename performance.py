@@ -4,10 +4,7 @@ from aircraft import FT_TO_M, KT_TO_MS
 
 G = 9.80665   # m/s^2
 
-
-# ---------------------------------------------------------------------------
 # Thrust
-# ---------------------------------------------------------------------------
 def max_thrust(h, aircraft):
     """
     Maximum climb thrust [N] at altitude h [m].
@@ -39,21 +36,8 @@ def idle_thrust(h, aircraft):
     return T
 
 
-# ---------------------------------------------------------------------------
 # Speed and rate of descent
-# ---------------------------------------------------------------------------
 def v_min_rod(m, rho, T, aircraft):
-    """
-    Speed [m/s] that minimises the rate of descent.
-
-    Obtained by setting d(RoD)/dv = 0:
-        3A v^4 - T v^2 - B = 0
-    with
-        A = 1/2 rho S CD0            (parasite drag:  D_p = A v^2)
-        B = 2 CD2 (m g)^2 / (rho S)  (induced drag:   D_i = B / v^2)
-    Biquadratic equation. The only positive root is:
-        v^2 = (T + sqrt(T^2 + 12 A B)) / (6 A)
-    """
     S = aircraft.S
     CD0 = aircraft.cd0_clean
     CD2 = aircraft.cd2_clean
@@ -68,14 +52,6 @@ def v_min_rod(m, rho, T, aircraft):
 
 
 def rate_of_descent(v, m, rho, T, aircraft):
-    """
-    Rate of descent [m/s] at speed v (positive when descending).
-
-        CL  = 2 m g / (rho v^2 S)
-        CD  = CD0 + CD2 CL^2
-        D   = 1/2 rho v^2 S CD
-        RoD = v (D - T) / (m g)
-    """
     S = aircraft.S
     CD0 = aircraft.cd0_clean
     CD2 = aircraft.cd2_clean
@@ -88,17 +64,8 @@ def rate_of_descent(v, m, rho, T, aircraft):
 
     return rod
 
-
-# ---------------------------------------------------------------------------
 # Fuel
-# ---------------------------------------------------------------------------
 def fuel_flow(T, v, aircraft):
-    """
-    Fuel flow [kg/s].
-
-    BADA formulas: eta = CF1 (1 + v/CF2)   [kg/(min kN)], with v in kt
-                   FF  = eta * T           [kg/min],      with T in kN
-    """
     v_kt = v / KT_TO_MS
     T_kN = T / 1000
 
@@ -108,21 +75,8 @@ def fuel_flow(T, v, aircraft):
 
     return ff
 
-
-# ---------------------------------------------------------------------------
 # Full flight state at one point of the trajectory
-# ---------------------------------------------------------------------------
 def descent_state(h, m, aircraft):
-    """
-    Flight state at altitude h [m] with mass m [kg].
-
-    Returns a dictionary with:
-        v      true airspeed [m/s]
-        rod    rate of descent [m/s]
-        gamma  descent angle [rad]
-        T      idle thrust [N]
-        ff     fuel flow [kg/s]
-    """
     rho = isa(h)
     T = idle_thrust(h, aircraft)
     v = v_min_rod(m, rho, T, aircraft)
@@ -146,10 +100,7 @@ def descent_state(h, m, aircraft):
 
     return state
 
-
-# ---------------------------------------------------------------------------
 # Validation. Only runs with: python performance.py
-# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     from aircraft import AIRCRAFT
 

@@ -1,20 +1,5 @@
-"""
-STAR altitude restrictions at LEBL RWY 24L (SoW v1.1, section 4).
-
-Each restriction is stored as a minimum and/or maximum altitude at a
-waypoint of the STAR. This covers every type of restriction on the chart:
-    AT       FL150         -> alt_min = alt_max = FL150
-    AT/ABOVE FL150 or more -> alt_min = FL150, alt_max = None
-    AT/BELOW FL150 or less -> alt_min = None,  alt_max = FL150
-    WINDOW   FL120-FL150   -> alt_min = FL120, alt_max = FL150
-
-Data from the ENAIRE STAR charts (AIP, AD 2-LEBL STAR 3).
-Altitudes are given in ft on the chart and converted to m here.
-"""
-
 from aircraft import AIRCRAFT, FT_TO_M
 from sequencing import STARS, time_to_iaf
-
 
 class Restriction:
     def __init__(self, waypoint, distance_km, alt_min, alt_max):
@@ -24,11 +9,9 @@ class Restriction:
         self.alt_max = alt_max            # m   maximum altitude (None if no maximum)
 
 
-# ---------------------------------------------------------------------------
 # Restrictions of each STAR (AIP ENAIRE, AD 2-LEBL STAR 3).
 # Restriction(waypoint, distance to the IAF [km], minimum [m], maximum [m])
 # Waypoints without restriction are included to see the simulated altitude.
-# ---------------------------------------------------------------------------
 RESTRICTIONS = {
     "ALBER1Z": [
         Restriction("ALBER", 129.1, 11000 * FT_TO_M, 25000 * FT_TO_M),  # FL110 - FL250
@@ -79,11 +62,7 @@ RESTRICTIONS = {
 
 
 def check_one(h_sim, r):
-    """
-    Compares the simulated altitude h_sim [m] with restriction r.
-    Returns the result as text: "OK", "no restriction",
-    "TOO LOW by ... m" or "TOO HIGH by ... m".
-    """
+    #Compares the simulated altitude h_sim [m] with restriction r.
     if r.alt_min is None and r.alt_max is None:
         result = "no restriction"
     elif r.alt_min is not None and h_sim < r.alt_min:
@@ -97,13 +76,8 @@ def check_one(h_sim, r):
 
 
 def check_restrictions(trajectories):
-    """
-    For every restriction, finds the altitude of the simulated trajectory at
-    that waypoint and checks whether it complies.
 
-    Prints, for each waypoint: simulated altitude, limits and the result.
-    The deviation is how many metres the trajectory is outside the limit.
-    """
+    #For every restriction, finds the altitude of the simulated trajectory at that waypoint and checks whether it complies.
     print()
     print("STAR ALTITUDE RESTRICTIONS")
     print("STAR      waypoint  dist[km]  h_sim[m]  min[m]  max[m]  result")
@@ -134,19 +108,9 @@ def check_restrictions(trajectories):
                   "  ", max_text,
                   "  ", result)
 
-
-# ---------------------------------------------------------------------------
 # Every STAR with every simulated trajectory (5 aircraft x 2 weights)
-# ---------------------------------------------------------------------------
 def failed_waypoints(trajectory, star):
-    """
-    Checks one trajectory against all the restrictions of one STAR.
-
-    Returns the list of waypoints where the restriction is not met
-    (an empty list means the trajectory complies with the whole STAR).
-    Waypoints before the top of descent are flown in cruise at FL400
-    (see time_to_iaf in sequencing.py).
-    """
+    #Checks one trajectory against all the restrictions of one STAR.
     failed = []
     for r in RESTRICTIONS[star]:
         flight_time, h_sim = time_to_iaf(trajectory, r.distance_km * 1000)
@@ -159,14 +123,7 @@ def failed_waypoints(trajectory, star):
 
 
 def check_all_aircraft(trajectories):
-    """
-    For every STAR, checks the 10 simulated trajectories and prints which
-    ones comply with all the altitude restrictions.
-        OK          complies with every restriction
-        waypoints   names of the waypoints where it does not comply
-    If the STAR is longer than the CDO from FL400, the length of the cruise
-    segment at FL400 before the top of descent is also printed.
-    """
+    #For every STAR, checks the 10 simulated trajectories and prints which ones comply with all the altitude restrictions.
     print()
     print("COMPLIANCE OF EVERY TRAJECTORY WITH EVERY STAR")
 
@@ -191,7 +148,6 @@ def check_all_aircraft(trajectories):
                     text = text + "  (cruise at FL400 for " + str(round(star_km - cdo_km, 1)) + " km)"
 
                 print("   ", name, pct, "% MLW:", text)
-
 
 def plot_all_restrictions(ax, restrictions_dict):
     waypoints = {}

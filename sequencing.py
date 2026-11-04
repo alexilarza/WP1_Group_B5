@@ -1,11 +1,8 @@
 ENTRY_TIME = 11 * 3600 + 45 * 60     # 11:45:00 in seconds since midnight
 SEPARATION = 120.0                   # s   separation at the IAF in scenario 2
 
-# ---------------------------------------------------------------------------
 # Arrivals (SoW v1.1, section 3)
-# distance_km: distance ALONG THE STAR from its first waypoint to the IAF [km],
-# from the ENAIRE STAR charts (AIP; the charts give NM, converted to km).
-# ---------------------------------------------------------------------------
+# distance_km: distance ALONG THE STAR from its first waypoint to the IAF [km], from the ENAIRE STAR charts (AIP; the charts give NM, converted to km).
 STARS = {
     "ALBER1Z": {"aircraft": "B767", "mlw": 80,  "distance_km": 129.08},
     "PUMAL1Z": {"aircraft": "B737", "mlw": 100, "distance_km": 94.5},
@@ -15,9 +12,8 @@ STARS = {
     "CASPE2W": {"aircraft": "A320", "mlw": 100, "distance_km": 164.0},
 }
 
-
 def time_to_string(seconds):
-    """Converts seconds since midnight to the text HH:MM:SS."""
+    #Converts seconds since midnight to the text HH:MM:SS.
     seconds = round(seconds)
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
@@ -26,7 +22,7 @@ def time_to_string(seconds):
 
 
 def duration_to_string(seconds):
-    """Converts a duration in seconds to the text 'MM min SS s'."""
+    #Converts a duration in seconds to the text 'MM min SS s'."""
     seconds = round(seconds)
     minutes = seconds // 60
     secs = seconds % 60
@@ -34,19 +30,7 @@ def duration_to_string(seconds):
 
 
 def time_to_iaf(trajectory, distance):
-    """
-    Finds the point of the trajectory that is "distance" metres before the IAF.
-
-    Returns:
-        flight_time  time from that point to the IAF [s]
-        h_entry      altitude at that point [m]
-
-    The trajectory has one point per second, so the result is accurate to 1 s.
-
-    If the point is further than the whole CDO from FL400, the aircraft
-    cruises at FL400 until the top of descent (TOD), at the speed it has at
-    the TOD, and then starts the CDO.
-    """
+    #Finds the point of the trajectory that is "distance" metres before the IAF.
     x = trajectory["x"]
     t = trajectory["t"]
     h = trajectory["h"]
@@ -67,16 +51,9 @@ def time_to_iaf(trajectory, distance):
     h_entry = h[-1]
     return flight_time, h_entry
 
-
-# ---------------------------------------------------------------------------
 # Scenario 1
-# ---------------------------------------------------------------------------
 def scenario_1(trajectories):
-    """
-    All aircraft at the STAR entry point at 11:45:00.
-    Returns a dictionary: results["ALBER1Z"] -> h_entry, flight_time,
-    entry_time, iaf_time.
-    """
+    #All aircraft at the STAR entry point at 11:45:00.
     results = {}
 
     for star in STARS:
@@ -101,12 +78,7 @@ def scenario_1(trajectories):
 
 
 def arrival_order(results):
-    """
-    Returns the list of STARs ordered by arrival time at the IAF.
-
-    Builds a list of [iaf_time, star] pairs and sorts it: Python sorts
-    lists of pairs by their first element, i.e. by the time.
-    """
+    #Returns the list of STARs ordered by arrival time at the IAF.
     pairs = []
     for star in results:
         pairs.append([results[star]["iaf_time"], star])
@@ -119,18 +91,8 @@ def arrival_order(results):
 
     return order
 
-
-# ---------------------------------------------------------------------------
 # Scenario 2
-# ---------------------------------------------------------------------------
 def scenario_2(results_1, order):
-    """
-    Same order of arrival as scenario 1, exactly SEPARATION seconds between
-    consecutive aircraft at the IAF. The first aircraft is not moved.
-
-    The flight time from the STAR entry to the IAF does not change (same
-    trajectory, same distance): only the entry time is moved.
-    """
     first_star = order[0]
     first_iaf_time = results_1[first_star]["iaf_time"]
 
@@ -154,12 +116,9 @@ def scenario_2(results_1, order):
 
     return results_2
 
-
-# ---------------------------------------------------------------------------
 # Printing
-# ---------------------------------------------------------------------------
 def print_scenario(results, order, title):
-    """Prints one row per aircraft, in order of arrival at the IAF."""
+    #Prints one row per aircraft, in order of arrival at the IAF.
     print()
     print(title)
     print("STAR      aircraft  MLW%  h_entry[m]  entry     STAR->IAF     IAF       gap[s]")

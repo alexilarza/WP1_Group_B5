@@ -16,9 +16,7 @@ H_MAX = 20000.0      # m         Superior model limit
 
 
 def isa(h):
-    """
-    Returns air density [kg/m^3] at altitude h [m].
-    """
+    #Returns air density [kg/m^3] at altitude h [m].
 
     # Tells if altitude is not in the range
     if h < H_MIN:

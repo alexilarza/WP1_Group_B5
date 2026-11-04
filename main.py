@@ -1,13 +1,3 @@
-"""
-Main script of WP1: generates all the CDO trajectories with a single click
-and plots them.
-
-Run with: python main.py
-
-All trajectories are stored in the dictionary "trajectories" so they can be
-reused in later tasks (arrival sequencing, STAR altitude constraints).
-"""
-
 import matplotlib.pyplot as plt
 from aircraft import AIRCRAFT, FT_TO_M
 from simulator import getCDO, simulate_cdo
@@ -30,24 +20,15 @@ LINE_STYLES = {
     80: "--",
 }
 
-
-# ---------------------------------------------------------------------------
-# 1. Compute every trajectory
-# ---------------------------------------------------------------------------
-# trajectories["B767", 100] -> dictionary with lists x, h, t, m, v, rod
+# Compute every trajectory
 trajectories = {}
 
 for name in AIRCRAFT:
     for pct in MLW_PERCENTS:
         trajectories[name, pct] = simulate_cdo(name, pct)
 
-# getCDO is the function required by the SoW. Example of use:
-x_b767, h_b767 = getCDO("B767", 100)
 
-
-# ---------------------------------------------------------------------------
-# 2. Summary table in the console
-# ---------------------------------------------------------------------------
+# Summary table in the console
 print("aircraft  MLW%   distance[km]  time[min]  fuel[kg]")
 for name in AIRCRAFT:
     for pct in MLW_PERCENTS:
@@ -60,11 +41,7 @@ for name in AIRCRAFT:
               "       ", round(time, 1),
               "     ", round(fuel))
 
-
-# ---------------------------------------------------------------------------
-# 3. Arrival sequencing at LEBL (SoW section 3)
-#    Needs the STAR distances in sequencing.py
-# ---------------------------------------------------------------------------
+# Arrival sequencing at LEBL (SoW section 3)
 results_1 = scenario_1(trajectories)
 order = arrival_order(results_1)
 
@@ -84,21 +61,16 @@ else:
     print("Fill in all the STAR distances in sequencing.py to run the scenarios.")
 
 
-# ---------------------------------------------------------------------------
-# 4. Compliance with the STAR altitude restrictions (SoW section 4)
-#    Needs the restrictions in restrictions.py
-# ---------------------------------------------------------------------------
+
+# Compliance with the STAR altitude restrictions (SoW section 4)
+
 check_restrictions(trajectories)
 
 # Every STAR checked with all 10 trajectories, not only the assigned aircraft.
-# If a STAR is longer than the CDO from FL400, the aircraft cruises at FL400
-# until the top of descent (see time_to_iaf in sequencing.py).
+# If a STAR is longer than the CDO from FL400, the aircraft cruises at FL400 until the top of descent (see time_to_iaf in sequencing.py).
 check_all_aircraft(trajectories)
 
-
-# ---------------------------------------------------------------------------
-# 5. Plot: altitude vs distance to the IAF
-# ---------------------------------------------------------------------------
+# Plot: altitude vs distance to the IAF
 fig, ax = plt.subplots(figsize=(10, 6))
 
 for name in AIRCRAFT:

@@ -8,26 +8,15 @@ DT = 1.0                   # s   duration of each iteration
 
 
 def simulate_cdo(aircraft_model, MLW_percent):
-    """
-    Simulates the CDO backwards from the IAF to FL400.
-
-    Returns a dictionary of lists, one value per second:
-        x    distance to the IAF [m]   (negative)
-        h    altitude [m]
-        t    time to the IAF [s]       (negative)
-        m    mass [kg]
-        v    true airspeed [m/s]
-        rod  rate of descent [m/s]
-    """
     aircraft = AIRCRAFT[aircraft_model]
 
-    # --- Initial conditions: the aircraft at the IAF ---
+    # Initial conditions: the aircraft at the IAF
     x = 0.0
     h = H_IAF
     t = 0.0
     m = aircraft.mlw * MLW_percent / 100
 
-    # --- Lists where every point of the trajectory is stored ---
+    # Lists where every point of the trajectory is stored
     x_list = []
     h_list = []
     t_list = []
@@ -35,7 +24,7 @@ def simulate_cdo(aircraft_model, MLW_percent):
     v_list = []
     rod_list = []
 
-    # --- Backward loop: one iteration = one second ---
+    # Backward loop: one iteration = one second
     while h < H_TOP:
         # Flight state at the current point (speed constant within the iteration)
         state = descent_state(h, m, aircraft)
@@ -77,24 +66,14 @@ def simulate_cdo(aircraft_model, MLW_percent):
 
     return trajectory
 
-
 def getCDO(aircraft_model, MLW_percent):
-    """
-    Mandatory function of the SoW: [x, h] = getCDO(aircraft_model, MLW_percent)
-
-    aircraft_model: "B767", "B777", "B737", "A320" or "A319"
-    MLW_percent:    weight at the IAF as a percentage of the MLW (80 or 100)
-
-    Returns two lists: x [m] and h [m].
-    """
     trajectory = simulate_cdo(aircraft_model, MLW_percent)
 
     return trajectory["x"], trajectory["h"]
 
 
-# ---------------------------------------------------------------------------
+
 # Validation. Only runs with: python simulator.py
-# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     print("aircraft  MLW%   distance[km]  time[min]  mass IAF[kg]  mass TOD[kg]  fuel[kg]  h_last[m]")
     for name in AIRCRAFT:
